@@ -1,41 +1,29 @@
 #include <iostream>
 #include <fstream>
+#include <string>
+#include "save.pb.h"
+//#include "class.h"
+//#include "saveLoad.h"
+//#include <boost/archive/text_iarchive.hpp>
+//#include <boost/archive/text_oarchive.hpp>
 using namespace std;
 
 int main()
 {
-	ofstream outSaveFile;
-	outSaveFile.open("saveFile.txt");
-	outSaveFile << "[currentLocation]\r\n";
-	outSaveFile << "bedroom\r\n";
-	outSaveFile << "closet";
-	outSaveFile.close();
+	inventory newInventory;
+	//newInventory.initItems();
+	//newInventory.listItems();
+	//ofstream outfile("Save.dat", ios::binary);
+	//outfile.write(reinterpret_cast<char*>(&newInventory), sizeof(newInventory));
+	//saveClass("Save.dat", &newInventory);
+	//newInventory.initItems();
+	//loadClass("SAVE.DAT", &newInventory);
+	//ifstream infile("Save.dat", ios::binary);
+	//infile.read( reinterpret_cast<char*>(&newInventory), sizeof(newInventory));
+	//newInventory.listItems();
+	ofstream ofs("save.dat");
+	boost::archive::text_oarchive ar(ofs);
+	ar & newInventory;
+	return 0;
 
-	ifstream inSaveFile;
-	inSaveFile.open("saveFile.txt");
-	string line;
-	string parameter;
-	string currentLocation = "init";
-	while(!inSaveFile.eof())
-	{
-		inSaveFile >> line;
-		if(line.find("[")!=string::npos)
-		{
-			unsigned first = line.find("[");
-			unsigned last = line.find("]");
-			parameter = line.substr(first+1, last-first-1);
-		}
-		//cout << line << "\n";
-		if(parameter == "currentLocation")
-		{
-			if(line.find(parameter)!=string::npos)
-			{
-				inSaveFile >> line;
-				//cout << line;
-			}
-			currentLocation=line;
-			cout << currentLocation << "\n";
-		}
-	}
-	//cout << currentLocation;
 }

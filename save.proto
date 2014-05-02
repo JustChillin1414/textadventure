@@ -1,0 +1,8 @@
+package textadventure;
+
+message saveFile
+{
+	required bool gameOver = 1;
+	required string name = 2;
+	repeated string inventory = 3;
+}
